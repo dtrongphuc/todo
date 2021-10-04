@@ -1,11 +1,16 @@
 import React from 'react';
-import MainLayout from './layouts/MainLayout';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import LoginPage from 'pages/Login/LoginPage';
+import HomePage from 'pages/HomePage';
 
 function App() {
   return (
-    <div className='App'>
-      <MainLayout />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path='/auth/login' component={LoginPage} />
+        <Route path='/' component={HomePage} />
+      </Switch>
+    </Router>
   );
 }
 

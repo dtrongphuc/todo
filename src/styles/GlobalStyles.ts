@@ -1,6 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+  :root {
+    --primary-color: rgb(0, 103, 184);
+    --danger-color: rgb(232, 17, 35);
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -27,5 +32,9 @@ export default createGlobalStyle`
   img {
     width: 100%;
     height: auto;
+  }
+
+  .text-center {
+    text-align: center;
   }
 `;
