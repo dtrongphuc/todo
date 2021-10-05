@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import styled from 'styled-components';
 
 interface InputGroupProps {
@@ -81,7 +82,7 @@ export const InputGroup = styled.div<InputGroupProps>`
 `;
 
 export const Label = styled.label`
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #000;
   margin-bottom: 4px;
   text-align: left;
@@ -101,7 +102,8 @@ export const Input = styled.input`
   }
 `;
 
-export const ButtonSubmit = styled.button`
+export const ButtonSubmit = styled(Button)`
+  margin-top: 6px;
   outline: none;
   min-width: 120px;
   height: 48px;

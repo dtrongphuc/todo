@@ -1,6 +1,9 @@
 import client from './client';
 import { AxiosResponse } from 'axios';
-import { UserInput } from 'models/User.interface';
+import { CurrentUser, UserInput } from 'models/User.interface';
 
-export const postLogin = (data: UserInput): Promise<AxiosResponse> =>
-  client.post('/login', data);
+export const postLogin = (
+  data: UserInput
+): Promise<AxiosResponse<CurrentUser>> => {
+  return client.post<UserInput, AxiosResponse<CurrentUser>>('/login', data);
+};

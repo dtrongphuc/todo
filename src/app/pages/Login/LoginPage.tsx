@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AuthLayout from 'layouts/AuthLayout';
 import {
   ButtonSubmit,
@@ -18,9 +18,12 @@ import logo from 'assets/images/microsoft_logo.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { UserInput } from 'models/User.interface';
+import { CurrentUser, UserInput } from 'models/User.interface';
 import { useMutation } from 'react-query';
 import { postLogin } from 'api/auth';
+import { AxiosError, AxiosResponse } from 'axios';
+import { AuthContext } from 'contexts/AuthProvider';
+import { useHistory } from 'react-router';
 
 // Schema validation
 const schema = yup
@@ -35,19 +38,40 @@ function Login() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<UserInput>({
     resolver: yupResolver(schema),
   });
+  const { login } = useContext(AuthContext);
 
-  const mutation = useMutation(postLogin, {
-    onSuccess: (data) => {
-      console.log('success', data);
-    },
-  });
+  const { mutate, isLoading } = useMutation<
+    AxiosResponse<CurrentUser>,
+    AxiosError,
+    UserInput
+  >(postLogin);
+
+  let history = useHistory();
 
   const onSubmit: SubmitHandler<UserInput> = (data: UserInput) => {
-    mutation.mutate(data);
+    mutate(data, {
+      onSuccess: (response) => {
+        login(response.data);
+        history.push('/');
+      },
+      onError: (err) => {
+        if (err.response?.status === 400) {
+          setError('email', {
+            type: 'server',
+            message: 'Tài khoản không chính xác',
+          });
+          setError('password', {
+            type: 'server',
+            message: 'Mật khẩu không chính xác',
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -60,7 +84,7 @@ function Login() {
                 <Logo src={logo} />
               </LogoWrapper>
               <Heading>Đăng nhập</Heading>
-              <Form onSubmit={handleSubmit(onSubmit)}>
+              <Form onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
                 <InputGroup hasError={!!errors?.email}>
                   <Label htmlFor='email'>
                     Email{' '}
@@ -72,6 +96,7 @@ function Login() {
                     placeholder='Email, điện thoại hoặc Skype'
                     id='email'
                     type='text'
+                    autoComplete='off'
                   />
                 </InputGroup>
                 <InputGroup hasError={!!errors?.password}>
@@ -88,10 +113,17 @@ function Login() {
                     placeholder='Mật khẩu'
                     id='password'
                     type='password'
+                    autoComplete='off'
                   />
                 </InputGroup>
                 <div className='text-center'>
-                  <ButtonSubmit type='submit'>Đăng nhập</ButtonSubmit>
+                  <ButtonSubmit
+                    htmlType='submit'
+                    type='primary'
+                    loading={isLoading}
+                  >
+                    Đăng nhập
+                  </ButtonSubmit>
                 </div>
               </Form>
             </FormWrapper>

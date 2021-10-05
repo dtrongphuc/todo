@@ -35,7 +35,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "server": "json-server --watch db.json -m ./node_modules/json-server-auth --port 3001",
+    "server": "json-server --delay 5000 --watch db.json -m ./node_modules/json-server-auth --port 3001",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",

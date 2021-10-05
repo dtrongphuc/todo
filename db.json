@@ -3,7 +3,14 @@
     {
       "email": "dtrongphucdv@gmail.com",
       "password": "$2a$10$4U2go1xaPuXbyKNcRsz1M.UNxKy6itBu2wl7KILcm9b5ZyyzqBZp.",
+      "name": "Duong Trong Phuc",
       "id": 1
+    }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "content": "hihi"
     }
   ]
 }
