@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 
 interface Props extends RouteProps {
-  component: any;
+  component?: any;
 }
 
 const PrivateRoute: React.FC<Props> = ({
