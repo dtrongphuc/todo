@@ -8,9 +8,24 @@ import Star from './Star';
 import { useAppDispatch } from 'app/hooks';
 import { actions } from 'features/task/taskSlice';
 const { TextArea } = Input;
+const { confirm } = Modal;
 interface Props {
   task: TaskState;
 }
+
+interface ConfirmArgs {
+  item: string;
+  onOk: (e: React.MouseEvent) => void;
+}
+
+const showConfirm = ({ item, onOk }: ConfirmArgs) => {
+  confirm({
+    title: 'Delete task',
+    content: `"${item}" will be permanently deleted.`,
+    onOk: onOk,
+    onCancel() {},
+  });
+};
 
 const TaskItem: React.FC<Props> = ({ task }) => {
   const [editVisible, setEditVisible] = useState<boolean>(false);
@@ -64,9 +79,7 @@ const TaskItem: React.FC<Props> = ({ task }) => {
     );
   };
 
-  const handleDeleteTask = (e: React.MouseEvent) => {
-    e.stopPropagation();
-
+  const handleDeleteTask = () => {
     dispatch(actions.deleteTask(task.id));
   };
 
@@ -93,7 +106,12 @@ const TaskItem: React.FC<Props> = ({ task }) => {
             arrowPointAtCenter={true}
             title='Delete task'
           >
-            <AnimateButton onClick={handleDeleteTask}>
+            <AnimateButton
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                showConfirm({ item: task.content, onOk: handleDeleteTask });
+              }}
+            >
               <MdOutlineDeleteSweep color='var(--danger-color)' size='1.4rem' />
             </AnimateButton>
           </Tooltip>
