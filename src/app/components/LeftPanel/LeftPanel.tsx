@@ -1,28 +1,42 @@
 import React, { useContext } from 'react';
 import User from 'app/components/User/User';
 import { IoSearch } from 'react-icons/io5';
-import { FlexRow, SearchIcon } from './LeftPanel.style';
-import { useHistory } from 'react-router';
+import {
+  FlexRow,
+  CustomNavLink,
+  Brand,
+  Sidebar,
+  Overlay,
+} from './LeftPanel.style';
 import { AuthContext } from 'contexts/AuthProvider';
 import { Space } from 'antd';
-import Menu from '../Menu/Menu';
+import Menu from 'app/components/Menu/Menu';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { close, selectSidebarState } from 'features/setting/settingSlice';
 
 const LeftPanel: React.FC = () => {
-  let history = useHistory();
+  const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
+  const sidebarState = useAppSelector(selectSidebarState);
 
   return (
-    <Space direction='vertical' style={{ width: '100%' }}>
-      <FlexRow>
-        <User name={user?.name} email={user?.email} />
-        <SearchIcon onClick={() => history.push('/search')}>
-          <IoSearch size={18} color='#545454' />
-        </SearchIcon>
-      </FlexRow>
-      <FlexRow>
-        <Menu />
-      </FlexRow>
-    </Space>
+    <>
+      <Sidebar isOpen={sidebarState}>
+        <Brand>Microsoft To Do</Brand>
+        <Space direction='vertical' style={{ width: '100%' }}>
+          <FlexRow>
+            <User name={user?.name} email={user?.email} />
+            <CustomNavLink to='/search' activeClassName='active'>
+              <IoSearch size={18} color='#545454' />
+            </CustomNavLink>
+          </FlexRow>
+          <FlexRow>
+            <Menu />
+          </FlexRow>
+        </Space>
+      </Sidebar>
+      <Overlay onClick={() => dispatch(close())} />
+    </>
   );
 };
 

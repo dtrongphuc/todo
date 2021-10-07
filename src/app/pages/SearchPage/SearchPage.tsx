@@ -1,53 +1,33 @@
 import { Form } from 'antd';
-import { FindParams, findTask } from 'api/task';
-import { AxiosError, AxiosResponse } from 'axios';
-import { TaskState } from 'models/Task.interface';
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
 import FindBackground from './components/FindBackground';
 import NotFoundBackground from './components/NotFoundBackground';
 import { Container, FormInput, SearchWrapper } from './SearchPage.style';
 import List from './components/List';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import {
+  actions,
+  selectLoading,
+  selectTaskList,
+} from 'features/task/taskSlice';
 
 const SearchPage: React.FC = () => {
   const [form] = Form.useForm();
-  const [taskList, setTaskList] = useState<TaskState[]>([]);
   const [value, setValue] = useState<string>('');
-
-  const mutation = useMutation<
-    AxiosResponse<TaskState[]>,
-    AxiosError,
-    FindParams
-  >(findTask);
+  const dispatch = useAppDispatch();
+  const taskList = useAppSelector(selectTaskList);
+  const loading = useAppSelector(selectLoading);
 
   const handleSubmit = (values: { search: string }): void => {
     if (!values?.search) {
       return;
     }
-
-    mutation.mutate(
-      {
-        content: values.search,
-      },
-      {
-        onSuccess: (response: AxiosResponse<TaskState[]>) => {
-          setTaskList(response.data);
-        },
-      }
-    );
+    dispatch(actions.searchTask({ content: values.search }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    mutation.mutate(
-      {
-        content: e.currentTarget.value,
-      },
-      {
-        onSuccess: (response: AxiosResponse<TaskState[]>) => {
-          setTaskList(response.data);
-        },
-      }
-    );
+    dispatch(actions.searchTask({ content: e.currentTarget.value }));
+
     setValue(e.currentTarget.value);
   };
 
@@ -70,7 +50,7 @@ const SearchPage: React.FC = () => {
       </Form>
       <Container>
         {!value && <FindBackground />}
-        {value && taskList.length === 0 && !mutation.isLoading ? (
+        {value && taskList.length === 0 && !(loading === 'pending') ? (
           <NotFoundBackground />
         ) : (
           <List tasks={taskList} />

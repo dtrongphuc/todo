@@ -9,20 +9,6 @@
   ],
   "tasks": [
     {
-      "content": "taks one",
-      "date": 1633492083197,
-      "isCompleted": true,
-      "isImportant": false,
-      "id": 1
-    },
-    {
-      "content": "task two",
-      "date": 1633492119230,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 2
-    },
-    {
       "content": "task three",
       "date": 1633492168036,
       "isCompleted": false,
@@ -37,13 +23,6 @@
       "id": 4
     },
     {
-      "content": "a",
-      "date": 1633495957152,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 5
-    },
-    {
       "content": "1",
       "date": 1633503195326,
       "isCompleted": false,
@@ -51,32 +30,11 @@
       "id": 6
     },
     {
-      "content": "2",
-      "date": 1633503779645,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 7
-    },
-    {
-      "content": "3",
-      "date": 1633503780168,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 8
-    },
-    {
       "content": "4",
       "date": 1633503781303,
       "isCompleted": false,
       "isImportant": false,
       "id": 9
-    },
-    {
-      "content": "5",
-      "date": 1633503782181,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 10
     },
     {
       "content": "2",
@@ -107,13 +65,6 @@
       "id": 14
     },
     {
-      "content": "test 2",
-      "date": 1633518337090,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 15
-    },
-    {
       "content": "test 3",
       "date": 1633518463272,
       "isCompleted": false,
@@ -128,13 +79,6 @@
       "id": 17
     },
     {
-      "content": "hihi",
-      "date": 1633569597877,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 18
-    },
-    {
       "content": "a",
       "date": 1633569600535,
       "isCompleted": false,
@@ -142,25 +86,11 @@
       "id": 19
     },
     {
-      "content": "w",
-      "date": 1633569601223,
+      "content": "asdasd",
+      "date": 1633603118738,
       "isCompleted": false,
       "isImportant": false,
       "id": 20
-    },
-    {
-      "content": "e",
-      "date": 1633569601641,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 21
-    },
-    {
-      "content": "r",
-      "date": 1633569602809,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 22
     }
   ]
 }

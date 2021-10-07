@@ -3,10 +3,10 @@ import EmptyTask from 'app/components/EmptyTask/EmptyTask';
 import RightPanel from 'app/components/RightPanel/RightPanel';
 import Image from 'assets/images/calendar.png';
 import { IoCheckmarkSharp } from 'react-icons/io5';
-import { fetchTaskList, selectTaskList } from 'features/tasks/tasksSlice';
+import { actions, selectTaskList } from 'features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import TaskList from 'app/components/TaskItem/TaskList';
-import { defaultParams, getParams } from 'api/task';
+import { defaultParams, FetchParams } from 'api/task';
 import Heading from 'app/components/Heading/Heading';
 import { withPagination } from 'app/components/HOCs/withPagination';
 
@@ -33,24 +33,25 @@ const Empty = (
 const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
+  const totalRecords = useAppSelector((state) => state.tasks.totalRecords);
 
   // fetch task list
   useEffect(() => {
     const fetch = async () => {
       try {
-        const params: getParams = {
+        const params: FetchParams = {
           ...defaultParams,
           _page: page,
           isCompleted: true,
         };
-        await dispatch(fetchTaskList(params));
+        dispatch(actions.fetch(params));
       } catch (error) {
         console.log(error);
       }
     };
 
     fetch();
-  }, [dispatch, page]);
+  }, [dispatch, page, totalRecords]);
 
   const top = (
     <Heading

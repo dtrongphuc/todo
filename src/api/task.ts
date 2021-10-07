@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { TaskInput, TaskState } from 'models/Task.interface';
 import client from './client';
 
-export interface getParams {
+export interface FetchParams {
   isCompleted?: boolean;
   isImportant?: boolean;
   _page?: number;
@@ -15,16 +15,16 @@ export interface FindParams {
   content: string;
 }
 
-export const defaultParams: getParams = {
-  _limit: 4,
+export const defaultParams: FetchParams = {
+  _limit: 7,
   _sort: 'date',
   _order: 'desc',
 };
 
 export const getTaskList = (
-  params: getParams
+  params: FetchParams
 ): Promise<AxiosResponse<TaskState[]>> => {
-  return client.get<getParams, AxiosResponse<TaskState[]>>('/660/tasks', {
+  return client.get<FetchParams, AxiosResponse<TaskState[]>>('/660/tasks', {
     params,
   });
 };
@@ -38,7 +38,20 @@ export const postNewTask = (
 export const findTask = (
   params: FindParams
 ): Promise<AxiosResponse<TaskState[]>> => {
-  return client.get<getParams, AxiosResponse<TaskState[]>>('/660/tasks', {
+  return client.get<FetchParams, AxiosResponse<TaskState[]>>('/660/tasks', {
     params,
   });
+};
+
+export const updateTask = (
+  data: TaskState
+): Promise<AxiosResponse<TaskState>> => {
+  return client.put<TaskState, AxiosResponse<TaskState>>(
+    `/660/tasks/${data.id}`,
+    data
+  );
+};
+
+export const deleteTaskApi = (id: number): Promise<AxiosResponse<object>> => {
+  return client.delete<number, AxiosResponse<object>>(`/660/tasks/${id}`);
 };

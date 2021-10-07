@@ -6,20 +6,25 @@ import {
   IoHomeOutline,
   IoStarOutline,
 } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+
+export const CustomNavLink = styled(NavLink)`
+  &.menu-active {
+    background: red;
+  }
+`;
 
 const Menu: React.FC = () => {
   return (
     <Space direction='vertical' size={4} style={{ width: '100%' }}>
-      <Link to='/'>
-        <MenuItem icon={<IoHomeOutline />} content='Tasks' />
-      </Link>
-      <Link to='/completed'>
-        <MenuItem icon={<IoCheckmarkSharp />} content='Completed' />
-      </Link>
-      <Link to='/important'>
-        <MenuItem icon={<IoStarOutline />} content='Important' />
-      </Link>
+      <MenuItem to='/' icon={<IoHomeOutline />} content='Tasks' />
+      <MenuItem
+        to='/completed'
+        icon={<IoCheckmarkSharp />}
+        content='Completed'
+      />
+      <MenuItem to='/important' icon={<IoStarOutline />} content='Important' />
     </Space>
   );
 };

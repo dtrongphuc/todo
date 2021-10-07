@@ -1,60 +1,132 @@
-import { Space } from 'antd';
-import React from 'react';
-import {
-  IoCheckmarkCircleOutline,
-  IoCheckmarkCircleSharp,
-  IoEllipseOutline,
-  IoStarOutline,
-  IoStarSharp,
-} from 'react-icons/io5';
-import {
-  AnimateButton,
-  ButtonWrapper,
-  Content,
-  Wrapper,
-} from './TaskItem.style';
+import { Space, Modal, Input, Tooltip } from 'antd';
+import React, { useState } from 'react';
+import { AnimateButton, Content, Wrapper } from './TaskItem.style';
 import { MdOutlineDeleteSweep } from 'react-icons/md';
 import { TaskState } from 'models/Task.interface';
-
+import Checkbox from './Checkbox';
+import Star from './Star';
+import { useAppDispatch } from 'app/hooks';
+import { actions } from 'features/task/taskSlice';
+const { TextArea } = Input;
 interface Props {
   task: TaskState;
 }
 
 const TaskItem: React.FC<Props> = ({ task }) => {
+  const [editVisible, setEditVisible] = useState<boolean>(false);
+  const [editText, setEditText] = useState<string>(task?.content);
+  const dispatch = useAppDispatch();
+
+  const handleOk = () => {
+    dispatch(
+      actions.updateTask({
+        ...task,
+        content: editText,
+      })
+    );
+
+    setEditVisible(false);
+  };
+
+  const handleCancel = () => {
+    setEditVisible(false);
+  };
+
+  const handleEditTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setEditText(e.currentTarget.value);
+  };
+
+  const handleBlur = () => {
+    if (editText.trim() === '') {
+      setEditText(task.content);
+    }
+  };
+
+  const handleToggleComplete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    dispatch(
+      actions.updateTask({
+        ...task,
+        isCompleted: !task.isCompleted,
+      })
+    );
+  };
+
+  const handleToggleImportant = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    dispatch(
+      actions.updateTask({
+        ...task,
+        isImportant: !task.isImportant,
+      })
+    );
+  };
+
+  const handleDeleteTask = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    dispatch(actions.deleteTask(task.id));
+  };
+
   return (
-    <Wrapper>
-      <ButtonWrapper checked={task?.isCompleted}>
-        <IoEllipseOutline
-          size='1.8rem'
-          color='#717171'
-          className='normal checkbox'
+    <>
+      <Wrapper onClick={() => setEditVisible(true)}>
+        <Tooltip
+          placement='topLeft'
+          arrowPointAtCenter={true}
+          title='Toggles the task between complete and incomplete'
+          destroyTooltipOnHide={true}
+        >
+          <div>
+            <Checkbox
+              checked={task?.isCompleted}
+              onClick={handleToggleComplete}
+            />
+          </div>
+        </Tooltip>
+        <Content>{task?.content}</Content>
+        <Space direction='horizontal' size={16}>
+          <Tooltip
+            placement='top'
+            arrowPointAtCenter={true}
+            title='Delete task'
+          >
+            <AnimateButton onClick={handleDeleteTask}>
+              <MdOutlineDeleteSweep color='var(--danger-color)' size='1.4rem' />
+            </AnimateButton>
+          </Tooltip>
+          <Tooltip
+            placement='topRight'
+            arrowPointAtCenter={true}
+            title='Mark as important'
+          >
+            <div>
+              <Star
+                checked={task?.isImportant}
+                onClick={handleToggleImportant}
+              />
+            </div>
+          </Tooltip>
+        </Space>
+      </Wrapper>
+      <Modal
+        title='Edit task'
+        visible={editVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <TextArea
+          placeholder='Edit task'
+          autoSize={{ minRows: 2, maxRows: 6 }}
+          defaultValue={task?.content}
+          value={editText}
+          onChange={handleEditTextChange}
+          onBlur={handleBlur}
         />
-        <IoCheckmarkCircleOutline
-          size='1.8rem'
-          color='#717171'
-          className='hover checkbox'
-        />
-        <IoCheckmarkCircleSharp
-          size='1.8rem'
-          color='#677492'
-          className='checked'
-        />
-      </ButtonWrapper>
-      <Content>{task?.content}</Content>
-      <Space direction='horizontal' size={16}>
-        <AnimateButton>
-          <MdOutlineDeleteSweep color='var(--danger-color)' size='1.4rem' />
-        </AnimateButton>
-        <ButtonWrapper checked={task?.isImportant}>
-          <IoStarOutline
-            size='1.1rem'
-            color='#717171'
-            className='checkbox normal no-hover'
-          />
-          <IoStarSharp size='1.1rem' color='#677492' className='checked' />
-        </ButtonWrapper>
-      </Space>
-    </Wrapper>
+      </Modal>
+    </>
   );
 };
 
