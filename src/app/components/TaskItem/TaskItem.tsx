@@ -14,19 +14,16 @@ import {
   Wrapper,
 } from './TaskItem.style';
 import { MdOutlineDeleteSweep } from 'react-icons/md';
+import { TaskState } from 'models/Task.interface';
 
 interface Props {
-  isCompleted?: boolean;
-  isImportant?: boolean;
+  task: TaskState;
 }
 
-const TaskItem: React.FC<Props> = ({
-  isCompleted = false,
-  isImportant = false,
-}) => {
+const TaskItem: React.FC<Props> = ({ task }) => {
   return (
     <Wrapper>
-      <ButtonWrapper checked={isCompleted}>
+      <ButtonWrapper checked={task?.isCompleted}>
         <IoEllipseOutline
           size='1.8rem'
           color='#717171'
@@ -43,14 +40,12 @@ const TaskItem: React.FC<Props> = ({
           className='checked'
         />
       </ButtonWrapper>
-      <Content>
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-      </Content>
+      <Content>{task?.content}</Content>
       <Space direction='horizontal' size={16}>
         <AnimateButton>
           <MdOutlineDeleteSweep color='var(--danger-color)' size='1.4rem' />
         </AnimateButton>
-        <ButtonWrapper checked={isImportant}>
+        <ButtonWrapper checked={task?.isImportant}>
           <IoStarOutline
             size='1.1rem'
             color='#717171'

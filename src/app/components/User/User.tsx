@@ -3,7 +3,12 @@ import { Avatar, Column, NormalText, SmallText, Wrapper } from './User.styles';
 import Image from 'assets/images/man.png';
 import UserDropdown from './UserDropdown';
 
-const User: React.FC = () => {
+interface Props {
+  name: string;
+  email: string;
+}
+
+const User: React.FC<Props> = ({ name, email }) => {
   return (
     <UserDropdown>
       <Wrapper>
@@ -11,8 +16,8 @@ const User: React.FC = () => {
           <img src={Image} alt='Avatar' />
         </Avatar>
         <Column>
-          <NormalText>Duong Trong Phuc</NormalText>
-          <SmallText>dtrongphucdv@gmail.com</SmallText>
+          <NormalText>{name}</NormalText>
+          <SmallText>{email}</SmallText>
         </Column>
       </Wrapper>
     </UserDropdown>

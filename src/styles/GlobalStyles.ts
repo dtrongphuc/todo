@@ -38,6 +38,24 @@ export default createGlobalStyle`
   .text-center {
     text-align: center;
   }
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
 `;
 
 export const LargeText = styled.h2`

@@ -7,6 +7,7 @@ const Wrapper = styled.main`
   height: 100vh;
   background-color: #fff;
   display: flex;
+  overflow: hidden;
 `;
 
 const Menu = styled.div`

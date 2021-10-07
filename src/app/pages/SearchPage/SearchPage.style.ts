@@ -3,9 +3,11 @@ import { Input } from 'antd';
 
 export const SearchWrapper = styled.div`
   background: #f1f1f1;
-  padding: 40px 32px;
+  padding: 40px 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const FormInput = styled(Input)`
@@ -14,8 +16,8 @@ export const FormInput = styled(Input)`
 `;
 
 export const Container = styled.div`
-  padding: 40px 30px;
   position: relative;
-  width: 100%;
-  height: 100%;
+  padding: 0 32px;
+  flex: 1;
+  overflow-y: auto;
 `;

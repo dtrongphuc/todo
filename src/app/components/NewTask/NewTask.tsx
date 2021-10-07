@@ -1,20 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { IoAddSharp, IoEllipseOutline } from 'react-icons/io5';
 import { Input, Left, Form, Wrapper, Hint } from './NewTask.style';
 
 interface Props {
-  handleAdd: () => void;
+  handleAdd?: (value: string) => void;
 }
 
 const NewTask: React.FC<Props> = ({ handleAdd }) => {
-  const [focused, setFocused] = useState(false);
-  const formRef = useRef<HTMLFormElement>(null);
+  const [focused, setFocused] = useState<boolean>(false);
+  const [value, setValue] = useState<string>('');
 
   const handleEnterKey = (e: React.KeyboardEvent): void => {
     if (e.key === 'Enter') {
-      handleAdd();
-      formRef.current?.reset();
+      handleAdd && handleAdd(value);
+      setValue('');
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setValue(e.currentTarget.value);
   };
 
   return (
@@ -26,12 +30,14 @@ const NewTask: React.FC<Props> = ({ handleAdd }) => {
           <IoAddSharp size='1.8rem' color='#fff' />
         )}
       </Left>
-      <Form onSubmit={(e) => e.preventDefault()} ref={formRef}>
+      <Form onSubmit={(e) => e.preventDefault()} autoComplete='off'>
         <Input
           name='new-task'
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           onKeyDown={handleEnterKey}
+          value={value}
+          onChange={handleChange}
         />
         {!focused && <Hint>Add a task</Hint>}
       </Form>

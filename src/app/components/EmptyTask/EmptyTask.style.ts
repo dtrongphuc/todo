@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   border-radius: 4%;
   min-width: 200px;
   min-height: 200px;
-  max-width: 260px;
+  max-width: 400px;
   max-height: 300px;
   padding: 1rem;
   overflow: hidden;

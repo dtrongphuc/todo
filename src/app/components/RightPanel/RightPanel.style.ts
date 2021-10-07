@@ -8,19 +8,26 @@ export const Wrapper = styled.section`
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
+  overflow: hidden;
 `;
 
 export const Inner = styled.div`
   position: relative;
-  padding: 48px 32px;
+  padding: 48px 0 40px 32px;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const TopRow = styled.div`
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: transparent;
+  padding-right: 32px;
 `;
 
 export const Center = styled.div`
@@ -31,8 +38,8 @@ export const Center = styled.div`
 `;
 
 export const BottomRow = styled.div`
-  position: absolute;
-  bottom: 32px;
+  position: sticky;
+  top: 100%;
   left: 0;
-  right: 0;
+  margin-right: 32px;
 `;
