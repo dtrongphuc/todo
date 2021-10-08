@@ -6,6 +6,7 @@ import { IoCheckmarkSharp } from 'react-icons/io5';
 import {
   actions,
   selectLoading,
+  selectShouldUpdate,
   selectTaskList,
 } from 'features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -38,6 +39,7 @@ const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
   const loading = useAppSelector(selectLoading);
+  const shouldUpdate = useAppSelector(selectShouldUpdate);
 
   // fetch task list
   useEffect(() => {
@@ -56,6 +58,26 @@ const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
 
     fetch();
   }, [dispatch, page]);
+
+  // re-fetch after delete
+  useEffect(() => {
+    if (shouldUpdate) {
+      const fetch = async () => {
+        try {
+          const params: FetchParams = {
+            ...defaultParams,
+            _page: page,
+            isCompleted: true,
+          };
+          dispatch(actions.fetch(params));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetch();
+    }
+  }, [dispatch, page, shouldUpdate]);
 
   const top = (
     <Heading

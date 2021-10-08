@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getTaskList, FetchParams, FindParams } from 'api/task';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FetchParams, FindParams } from 'api/task';
 import type { RootState } from 'app/store';
 import { AxiosResponse } from 'axios';
 import { TaskInput, TaskState } from 'models/Task.interface';
@@ -9,6 +9,7 @@ interface TaskList {
   taskList: TaskState[];
   totalRecords: 0 | number;
   totalPage: number;
+  shouldUpdate: boolean;
   loading: boolean;
   error: boolean;
 }
@@ -18,18 +19,10 @@ const initialState: TaskList = {
   taskList: [],
   totalRecords: 0,
   totalPage: 1,
+  shouldUpdate: false,
   loading: true,
   error: false,
 };
-
-// fetch all tasks
-export const fetchTaskList = createAsyncThunk(
-  'task/fetchTaskList',
-  async (params: FetchParams) => {
-    const response = await getTaskList(params);
-    return response;
-  }
-);
 
 export const taskSlice = createSlice({
   name: 'task',
@@ -50,6 +43,10 @@ export const taskSlice = createSlice({
         action.payload.headers['x-total-count'] ?? 0
       );
       state.totalPage = calcTotalPage(state.totalRecords);
+
+      if (state.shouldUpdate) {
+        state.shouldUpdate = false;
+      }
     },
     fetchRejected: (state) => {
       state.loading = false;
@@ -102,6 +99,8 @@ export const taskSlice = createSlice({
       state.taskList = state.taskList.filter((t) => t.id !== action.payload);
       state.totalPage = calcTotalPage(state.totalRecords - 1);
       state.totalRecords = state.totalRecords - 1;
+
+      state.shouldUpdate = true;
     },
     deleteTaskRejected: (state) => {
       state.loading = false;
@@ -133,5 +132,7 @@ export const actions = taskSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export const selectTaskList = (state: RootState) => state.tasks.taskList;
 export const selectLoading = (state: RootState) => state.tasks.loading;
+export const selectShouldUpdate = (state: RootState) =>
+  state.tasks.shouldUpdate;
 
 export default taskSlice.reducer;

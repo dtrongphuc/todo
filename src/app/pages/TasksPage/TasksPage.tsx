@@ -6,6 +6,7 @@ import { IoHomeOutline } from 'react-icons/io5';
 import {
   actions,
   selectLoading,
+  selectShouldUpdate,
   selectTaskList,
 } from 'features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -41,7 +42,7 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
   const loading = useAppSelector(selectLoading);
-  // const totalRecords = useAppSelector(state => state.tasks.totalRecords);
+  const shouldUpdate = useAppSelector(selectShouldUpdate);
 
   // fetch task list
   useEffect(() => {
@@ -57,9 +58,26 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
         message.error('Something went wrong.');
       }
     };
-
     fetch();
   }, [dispatch, page]);
+
+  useEffect(() => {
+    if (shouldUpdate) {
+      const fetch = async () => {
+        try {
+          const params: FetchParams = {
+            ...defaultParams,
+            _page: page,
+            isCompleted: false,
+          };
+          dispatch(actions.fetch(params));
+        } catch (error) {
+          message.error('Something went wrong.');
+        }
+      };
+      fetch();
+    }
+  }, [dispatch, page, shouldUpdate]);
 
   const handleAddNewTask = async (value: string) => {
     try {

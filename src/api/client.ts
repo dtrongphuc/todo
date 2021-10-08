@@ -35,6 +35,7 @@ client.interceptors.response.use(
     // If UNAUTHORIZED
     if (error.response?.status === 401) {
       localStorage('token').remove();
+      window.location.href = '/auth/login';
     }
     return Promise.reject(error);
   }

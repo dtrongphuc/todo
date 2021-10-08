@@ -44,13 +44,6 @@
       "id": 11
     },
     {
-      "content": "4",
-      "date": 1633516648065,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 12
-    },
-    {
       "content": "5",
       "date": 1633516648554,
       "isCompleted": false,
@@ -77,27 +70,6 @@
       "isCompleted": false,
       "isImportant": false,
       "id": 17
-    },
-    {
-      "content": "2",
-      "date": 1633660317586,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 21
-    },
-    {
-      "content": "1",
-      "date": 1633660340640,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 22
-    },
-    {
-      "content": "2",
-      "date": 1633660341585,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 23
     },
     {
       "content": "y",
