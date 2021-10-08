@@ -3,18 +3,23 @@ import { getTaskList, FetchParams, FindParams } from 'api/task';
 import type { RootState } from 'app/store';
 import { AxiosResponse } from 'axios';
 import { TaskInput, TaskState } from 'models/Task.interface';
+import { calcTotalPage } from 'utils';
 
 interface TaskList {
   taskList: TaskState[];
   totalRecords: 0 | number;
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+  totalPage: number;
+  loading: boolean;
+  error: boolean;
 }
 
 // Define the initial state using that type
 const initialState: TaskList = {
   taskList: [],
   totalRecords: 0,
-  loading: 'idle',
+  totalPage: 1,
+  loading: true,
+  error: false,
 };
 
 // fetch all tasks
@@ -33,44 +38,48 @@ export const taskSlice = createSlice({
   reducers: {
     // fetch
     fetch: (state, action: PayloadAction<FetchParams>) => {
-      state.loading = 'pending';
+      state.loading = true;
     },
     fetchSucceeded: (
       state,
       action: PayloadAction<AxiosResponse<TaskState[]>>
     ) => {
-      state.loading = 'succeeded';
+      state.loading = false;
       state.taskList = action.payload.data;
       state.totalRecords = parseInt(
         action.payload.headers['x-total-count'] ?? 0
       );
+      state.totalPage = calcTotalPage(state.totalRecords);
     },
     fetchRejected: (state) => {
-      state.loading = 'failed';
+      state.loading = false;
+      state.error = true;
     },
 
     // add task
     addTask: (state, action: PayloadAction<TaskInput>) => {
-      state.loading = 'pending';
+      state.loading = true;
     },
     addTaskSucceeded: (state, action: PayloadAction<TaskState>) => {
       return {
         ...state,
         taskList: [action.payload, ...state.taskList.slice(0, -1)],
-        loading: 'succeeded',
+        loading: false,
+        totalPage: calcTotalPage(state.totalRecords + 1),
         totalRecords: state.totalRecords + 1,
       };
     },
     addTaskRejected: (state) => {
-      state.loading = 'failed';
+      state.loading = false;
+      state.error = true;
     },
 
     // update task
     updateTask: (state, action: PayloadAction<TaskState>) => {
-      state.loading = 'pending';
+      state.loading = true;
     },
     updateTaskSucceeded: (state, action: PayloadAction<TaskState>) => {
-      state.loading = 'succeeded';
+      state.loading = false;
 
       const index = state.taskList.findIndex((t) => t.id === action.payload.id);
       state.taskList = [
@@ -80,30 +89,34 @@ export const taskSlice = createSlice({
       ];
     },
     updateTaskRejected: (state) => {
-      state.loading = 'failed';
+      state.loading = false;
+      state.error = true;
     },
 
     // delete task
     deleteTask: (state, action: PayloadAction<number>) => {},
     deleteTaskSucceeded: (state, action: PayloadAction<number>) => {
-      state.loading = 'succeeded';
+      state.loading = false;
       state.taskList = state.taskList.filter((t) => t.id !== action.payload);
+      state.totalPage = calcTotalPage(state.totalRecords - 1);
       state.totalRecords = state.totalRecords - 1;
     },
     deleteTaskRejected: (state) => {
-      state.loading = 'failed';
+      state.loading = false;
+      state.error = true;
     },
 
     // search
     searchTask: (state, action: PayloadAction<FindParams>) => {
-      state.loading = 'pending';
+      state.loading = true;
     },
     searchTaskSucceeded: (state, action: PayloadAction<TaskState[]>) => {
-      state.loading = 'succeeded';
+      state.loading = false;
       state.taskList = action.payload;
     },
     searchTaskRejected: (state) => {
-      state.loading = 'failed';
+      state.loading = false;
+      state.error = false;
     },
   },
 });

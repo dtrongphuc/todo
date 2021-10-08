@@ -3,7 +3,11 @@ import EmptyTask from 'app/components/EmptyTask/EmptyTask';
 import RightPanel from 'app/components/RightPanel/RightPanel';
 import Image from 'assets/images/calendar.png';
 import { IoStarOutline } from 'react-icons/io5';
-import { actions, selectTaskList } from 'features/task/taskSlice';
+import {
+  actions,
+  selectLoading,
+  selectTaskList,
+} from 'features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import TaskList from 'app/components/TaskItem/TaskList';
 import { defaultParams, FetchParams } from 'api/task';
@@ -29,7 +33,7 @@ const Empty = (
 const ImportantPage: React.FC<Props> = ({ next, prev, page }) => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
-  const totalRecords = useAppSelector((state) => state.tasks.totalRecords);
+  const loading = useAppSelector(selectLoading);
 
   // fetch task list
   useEffect(() => {
@@ -47,7 +51,7 @@ const ImportantPage: React.FC<Props> = ({ next, prev, page }) => {
     };
 
     fetch();
-  }, [dispatch, page, totalRecords]);
+  }, [dispatch, page]);
 
   const top = (
     <Heading
@@ -62,10 +66,10 @@ const ImportantPage: React.FC<Props> = ({ next, prev, page }) => {
     <RightPanel
       empty={Empty}
       top={top}
-      isEmpty={!taskList || taskList.length === 0}
+      isEmpty={!loading && (!taskList || taskList.length === 0)}
       bottom={false}
     >
-      <TaskList tasks={taskList} />
+      <TaskList tasks={taskList} loading={loading} />
     </RightPanel>
   );
 };

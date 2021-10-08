@@ -1,18 +1,10 @@
-import { defaultParams } from 'api/task';
 import { useAppSelector } from 'app/hooks';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 export function withPagination<T>(Component: React.ComponentType<T>) {
   return (hocProps: T) => {
     const [page, setPage] = useState<number>(1);
-    const totalRecords = useAppSelector<number>(
-      (state) => state.tasks.totalRecords
-    );
-    const [totalPage, setTotalPage] = useState<number>(1);
-
-    useEffect(() => {
-      setTotalPage(Math.ceil(totalRecords / defaultParams._limit) ?? 1);
-    }, [page, totalRecords]);
+    const totalPage = useAppSelector<number>((state) => state.tasks.totalPage);
 
     const nextPage = () => {
       if (page < totalPage) {

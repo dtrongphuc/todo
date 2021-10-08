@@ -5,7 +5,7 @@ interface SidebarWrapperProps {
   isOpen: boolean;
 }
 
-export const Wrapper = styled.section`
+export const Wrapper = styled.div`
   position: relative;
   background-image: url(${MainBackground});
   background-position: center center;

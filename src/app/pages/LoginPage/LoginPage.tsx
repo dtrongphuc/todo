@@ -13,7 +13,7 @@ import {
   LogoWrapper,
   Middle,
   TableContainer,
-} from './styled';
+} from './LoginPage.styled';
 import logo from 'assets/images/microsoft_logo.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

@@ -17,20 +17,10 @@ function App() {
           <Route exact path='/auth/login' component={LoginPage} />
           <PrivateRoute path='/'>
             <MainLayout>
-              <Switch>
-                <PrivateRoute exact path='/' component={TasksPage} />
-                <PrivateRoute
-                  exact
-                  path='/completed'
-                  component={CompletedPage}
-                />
-                <PrivateRoute
-                  exact
-                  path='/important'
-                  component={ImportantPage}
-                />
-                <PrivateRoute exact path='/search' component={SearchPage} />
-              </Switch>
+              <PrivateRoute exact path='/' component={TasksPage} />
+              <PrivateRoute exact path='/completed' component={CompletedPage} />
+              <PrivateRoute exact path='/important' component={ImportantPage} />
+              <PrivateRoute exact path='/search' component={SearchPage} />
             </MainLayout>
           </PrivateRoute>
         </Switch>

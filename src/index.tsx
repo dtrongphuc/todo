@@ -14,16 +14,14 @@ import { store } from 'app/store';
 const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <QueryClientProvider client={queryClient}>
-          <App />
-        </QueryClientProvider>
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

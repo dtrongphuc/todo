@@ -50,7 +50,7 @@ const SearchPage: React.FC = () => {
       </Form>
       <Container>
         {!value && <FindBackground />}
-        {value && taskList.length === 0 && !(loading === 'pending') ? (
+        {value && taskList.length === 0 && !loading ? (
           <NotFoundBackground />
         ) : (
           <List tasks={taskList} />

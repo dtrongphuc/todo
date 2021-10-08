@@ -3,13 +3,18 @@ import EmptyTask from 'app/components/EmptyTask/EmptyTask';
 import RightPanel from 'app/components/RightPanel/RightPanel';
 import Image from 'assets/images/calendar.png';
 import { IoHomeOutline } from 'react-icons/io5';
-import { actions, selectTaskList } from 'features/task/taskSlice';
+import {
+  actions,
+  selectLoading,
+  selectTaskList,
+} from 'features/task/taskSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { TaskInput } from 'models/Task.interface';
 import TaskList from 'app/components/TaskItem/TaskList';
 import { defaultParams, FetchParams } from 'api/task';
 import Heading from 'app/components/Heading/Heading';
 import { withPagination } from 'app/components/HOCs/withPagination';
+import { message } from 'antd';
 
 interface Props {
   next: {
@@ -35,7 +40,7 @@ const Empty = (
 const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
-  const totalRecords = useAppSelector((state) => state.tasks.totalRecords);
+  const loading = useAppSelector(selectLoading);
 
   // fetch task list
   useEffect(() => {
@@ -48,11 +53,11 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
         };
         dispatch(actions.fetch(params));
       } catch (error) {
-        console.log(error);
+        message.error('Something went wrong.');
       }
     };
     fetch();
-  }, [dispatch, page, totalRecords]);
+  }, [dispatch, page]);
 
   const handleAddNewTask = async (value: string) => {
     try {
@@ -65,7 +70,7 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
       dispatch(actions.addTask(data));
       setPage(1);
     } catch (error) {
-      console.log(error);
+      message.error('Something went wrong.');
     }
   };
 
@@ -78,10 +83,10 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
       empty={Empty}
       top={top}
       addNewTask={handleAddNewTask}
-      isEmpty={!taskList || taskList.length === 0}
+      isEmpty={!loading && (!taskList || taskList.length === 0)}
       bottom={true}
     >
-      <TaskList tasks={taskList} />
+      <TaskList tasks={taskList} loading={loading} />
     </RightPanel>
   );
 };
