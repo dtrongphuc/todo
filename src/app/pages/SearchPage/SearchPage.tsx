@@ -1,5 +1,5 @@
 import { Form } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FindBackground from './components/FindBackground';
 import NotFoundBackground from './components/NotFoundBackground';
 import { Container, FormInput, SearchWrapper } from './SearchPage.style';
@@ -17,6 +17,10 @@ const SearchPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
   const loading = useAppSelector(selectLoading);
+
+  useEffect(() => {
+    dispatch(actions.clear());
+  }, [dispatch]);
 
   const handleSubmit = (values: { search: string }): void => {
     if (!values?.search) {
@@ -50,11 +54,8 @@ const SearchPage: React.FC = () => {
       </Form>
       <Container>
         {!value && <FindBackground />}
-        {value && taskList.length === 0 && !loading ? (
-          <NotFoundBackground />
-        ) : (
-          <List tasks={taskList} />
-        )}
+        {value && taskList.length === 0 && !loading && <NotFoundBackground />}
+        {value && taskList.length > 0 && <List tasks={taskList} />}
       </Container>
     </SearchWrapper>
   );

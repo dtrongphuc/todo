@@ -20,4 +20,5 @@ export const Container = styled.div`
   padding: 0 32px;
   flex: 1;
   overflow-y: auto;
+  line-height: 1;
 `;

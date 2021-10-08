@@ -79,20 +79,6 @@
       "id": 17
     },
     {
-      "content": "a",
-      "date": 1633569600535,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 19
-    },
-    {
-      "content": "1",
-      "date": 1633660314524,
-      "isCompleted": false,
-      "isImportant": false,
-      "id": 20
-    },
-    {
       "content": "2",
       "date": 1633660317586,
       "isCompleted": false,
@@ -112,6 +98,20 @@
       "isCompleted": false,
       "isImportant": false,
       "id": 23
+    },
+    {
+      "content": "y",
+      "date": 1633662153001,
+      "isCompleted": false,
+      "isImportant": false,
+      "id": 24
+    },
+    {
+      "content": "a",
+      "date": 1633667565385,
+      "isCompleted": false,
+      "isImportant": false,
+      "id": 25
     }
   ]
 }

@@ -41,6 +41,7 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
   const loading = useAppSelector(selectLoading);
+  // const totalRecords = useAppSelector(state => state.tasks.totalRecords);
 
   // fetch task list
   useEffect(() => {
@@ -56,6 +57,7 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
         message.error('Something went wrong.');
       }
     };
+
     fetch();
   }, [dispatch, page]);
 

@@ -58,7 +58,7 @@ export const taskSlice = createSlice({
 
     // add task
     addTask: (state, action: PayloadAction<TaskInput>) => {
-      state.loading = true;
+      // state.loading = true;
     },
     addTaskSucceeded: (state, action: PayloadAction<TaskState>) => {
       return {
@@ -76,7 +76,7 @@ export const taskSlice = createSlice({
 
     // update task
     updateTask: (state, action: PayloadAction<TaskState>) => {
-      state.loading = true;
+      // state.loading = true;
     },
     updateTaskSucceeded: (state, action: PayloadAction<TaskState>) => {
       state.loading = false;
@@ -94,7 +94,9 @@ export const taskSlice = createSlice({
     },
 
     // delete task
-    deleteTask: (state, action: PayloadAction<number>) => {},
+    deleteTask: (state, action: PayloadAction<number>) => {
+      state.loading = true;
+    },
     deleteTaskSucceeded: (state, action: PayloadAction<number>) => {
       state.loading = false;
       state.taskList = state.taskList.filter((t) => t.id !== action.payload);
@@ -117,6 +119,11 @@ export const taskSlice = createSlice({
     searchTaskRejected: (state) => {
       state.loading = false;
       state.error = false;
+    },
+
+    // clear list
+    clear: (state) => {
+      state.taskList = [];
     },
   },
 });
