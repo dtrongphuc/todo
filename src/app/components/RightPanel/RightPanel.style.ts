@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import MainBackground from 'assets/images/main-background1.jpg';
 
 interface SidebarWrapperProps {
   isOpen: boolean;
@@ -7,12 +6,7 @@ interface SidebarWrapperProps {
 
 export const Wrapper = styled.div`
   position: relative;
-  background-image: url(${MainBackground});
-  background-position: center center;
-  background-size: cover;
-  background-repeat: no-repeat;
   height: 100%;
-  overflow: hidden;
 `;
 
 export const Inner = styled.div`

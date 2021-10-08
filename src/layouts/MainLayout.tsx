@@ -3,6 +3,7 @@ import React from 'react';
 import { Switch, useLocation } from 'react-router';
 import styled from 'styled-components';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import MainBackground from 'assets/images/main-background1.jpg';
 
 const Wrapper = styled.main`
   width: 100%;
@@ -24,7 +25,11 @@ const Wrapper = styled.main`
 const Main = styled(TransitionGroup)`
   flex-grow: 1;
   flex-shrink: 0;
-  background-color: #fff;
+  background-image: url(${MainBackground});
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
 `;
 
 const MainLayout: React.FC = ({ children }) => {
