@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface ContentProps {
+  isCompleted: boolean;
+}
+
 export const Wrapper = styled.div`
   background: #fff;
   border-radius: 4px;
@@ -14,11 +18,12 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Content = styled.p`
+export const Content = styled.p<ContentProps>`
+  position: relative;
   margin-bottom: 0;
   padding: 6px 12px;
   font-size: 0.9rem;
-  color: #000;
+  color: ${(props) => (props.isCompleted ? '#9a9a9a' : '#000')};
   text-align: left;
   flex: 1;
   width: min-content;
@@ -26,6 +31,9 @@ export const Content = styled.p`
   white-space: normal;
   overflow-wrap: break-word;
   cursor: default;
+
+  text-decoration: ${(props) =>
+    props.isCompleted ? 'line-through' : 'initial'};
 `;
 
 export const AnimateButton = styled.div`

@@ -99,7 +99,7 @@ const TaskItem: React.FC<Props> = ({ task }) => {
             />
           </div>
         </Tooltip>
-        <Content>{task?.content}</Content>
+        <Content isCompleted={task?.isCompleted}>{task?.content}</Content>
         <Space direction='horizontal' size={16}>
           <Tooltip
             placement='top'
