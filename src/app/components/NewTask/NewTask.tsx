@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoAddSharp, IoEllipseOutline } from 'react-icons/io5';
 import { Input, Left, Form, Wrapper, Hint } from './NewTask.style';
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const NewTask: React.FC<Props> = ({ handleAdd }) => {
+  const { t } = useTranslation();
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
 
@@ -39,7 +41,7 @@ const NewTask: React.FC<Props> = ({ handleAdd }) => {
           value={value}
           onChange={handleChange}
         />
-        {!focused && <Hint>Add a task</Hint>}
+        {!focused && <Hint>{t('tasks.input')}</Hint>}
       </Form>
     </Wrapper>
   );

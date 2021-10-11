@@ -1,0 +1,13 @@
+{
+  "errorMessage": "Something went wrong.",
+  "tooltip_check": "Toggles the task between complete and incomplete",
+  "tooltip_delete": "Delete task",
+  "tooltip_important": {
+    "remove": "Remove importance",
+    "mark": "Mark as important"
+  },
+  "popup_delete": "Delete task",
+  "popup_edit": "Edit task",
+  "okText": "OK",
+  "cancelText": "Cancel"
+}

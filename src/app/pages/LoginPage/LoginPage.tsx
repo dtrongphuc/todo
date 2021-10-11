@@ -24,6 +24,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { AuthContext } from 'contexts/AuthProvider';
 import { useHistory } from 'react-router';
 import { localStorage } from 'utils/localStorage';
+import { useTranslation } from 'react-i18next';
 
 // Schema validation
 const schema = yup
@@ -35,6 +36,8 @@ const schema = yup
   .required();
 
 function Login() {
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -85,17 +88,17 @@ function Login() {
               <LogoWrapper>
                 <Logo src={logo} />
               </LogoWrapper>
-              <Heading>Đăng nhập</Heading>
+              <Heading>{t('login.title')}</Heading>
               <Form onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
                 <InputGroup hasError={!!errors?.email}>
                   <Label htmlFor='email'>
-                    Email{' '}
+                    {t('login.input_1.label')}{' '}
                     <span className='error'> - {errors?.email?.message}</span>{' '}
                   </Label>
                   <Input
                     defaultValue=''
                     {...register('email')}
-                    placeholder='Email, điện thoại hoặc Skype'
+                    placeholder={t('login.input_1.placeholder')}
                     id='email'
                     type='text'
                     autoComplete='off'
@@ -103,7 +106,7 @@ function Login() {
                 </InputGroup>
                 <InputGroup hasError={!!errors?.password}>
                   <Label htmlFor='password'>
-                    Mật khẩu{' '}
+                    {t('login.input_2.label')}{' '}
                     <span className='error'>
                       {' '}
                       - {errors?.password?.message}
@@ -112,7 +115,7 @@ function Login() {
                   <Input
                     defaultValue=''
                     {...register('password')}
-                    placeholder='Mật khẩu'
+                    placeholder={t('login.input_2.placeholder')}
                     id='password'
                     type='password'
                     autoComplete='off'
@@ -124,7 +127,7 @@ function Login() {
                     type='primary'
                     loading={isLoading}
                   >
-                    Đăng nhập
+                    {t('login.submit')}
                   </ButtonSubmit>
                 </div>
               </Form>

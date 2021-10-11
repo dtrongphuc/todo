@@ -51,10 +51,10 @@ export const Overlay = styled.div`
 `;
 
 export const Sidebar = styled.div<SidebarProps>`
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
   width: 280px;
-  height: 100%;
   background-color: #fff;
   flex-shrink: 1;
   z-index: 10;
@@ -70,6 +70,13 @@ export const Sidebar = styled.div<SidebarProps>`
   }
 
   & ~ ${Overlay} {
-    display: ${(props) => (props.isOpen ? 'block' : 'none')};
+    display: ${(props) => (props.isOpen ? 'flex' : 'none')};
   }
+`;
+
+export const SpaceBetween = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 `;

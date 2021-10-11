@@ -14,6 +14,8 @@ import TaskList from 'app/components/TaskItem/TaskList';
 import { defaultParams, FetchParams } from 'api/task';
 import Heading from 'app/components/Heading/Heading';
 import { withPagination } from 'app/components/HOCs/withPagination';
+import { TFunction, useTranslation } from 'react-i18next';
+import { message } from 'antd';
 
 interface Props {
   next: {
@@ -27,15 +29,16 @@ interface Props {
   page: number;
 }
 
-const Empty = (
+const Empty = (t: TFunction) => (
   <EmptyTask
     image={Image}
-    text='No task completed yet.'
-    title='Focus on your day'
+    text={t('completed.empty.text')}
+    title={t('completed.empty.title')}
   />
 );
 
 const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
   const loading = useAppSelector(selectLoading);
@@ -52,12 +55,12 @@ const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
         };
         dispatch(actions.fetch(params));
       } catch (error) {
-        console.log(error);
+        message.error(t('common:errorMessage'));
       }
     };
 
     fetch();
-  }, [dispatch, page]);
+  }, [dispatch, page, t]);
 
   // re-fetch after delete
   useEffect(() => {
@@ -71,18 +74,18 @@ const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
           };
           dispatch(actions.fetch(params));
         } catch (error) {
-          console.log(error);
+          message.error(t('common:errorMessage'));
         }
       };
 
       fetch();
     }
-  }, [dispatch, page, shouldUpdate]);
+  }, [dispatch, page, shouldUpdate, t]);
 
   const top = (
     <Heading
       icon={<IoCheckmarkSharp />}
-      text='Completed'
+      text={t('completed.name')}
       prev={prev}
       next={next}
     />
@@ -90,7 +93,7 @@ const CompletedPage: React.FC<Props> = ({ next, prev, page }) => {
 
   return (
     <RightPanel
-      empty={Empty}
+      empty={Empty(t)}
       top={top}
       isEmpty={!loading && (!taskList || taskList.length === 0)}
       bottom={false}

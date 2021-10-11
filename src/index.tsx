@@ -10,6 +10,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import { store } from 'app/store';
 
+// init translation
+import './i18n';
+
 // Create a client
 const queryClient = new QueryClient();
 

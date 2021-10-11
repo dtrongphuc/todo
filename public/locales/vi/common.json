@@ -1,0 +1,13 @@
+{
+  "errorMessage": "Có lỗi đã xảy ra",
+  "tooltip_check": "Chuyển đổi giữa hoàn thành và chưa hoàn thành",
+  "tooltip_delete": "Xóa công việc",
+  "tooltip_important": {
+    "remove": "Bỏ đánh dấu quan trong",
+    "mark": "Đánh dấu là quan trọng"
+  },
+  "popup_delete": "Xóa công việc",
+  "popup_edit": "Chỉnh sửa công việc",
+  "okText": "Chấp nhận",
+  "cancelText": "Hủy"
+}

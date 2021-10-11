@@ -10,8 +10,10 @@ import {
   selectLoading,
   selectTaskList,
 } from 'features/task/taskSlice';
+import { useTranslation } from 'react-i18next';
 
 const SearchPage: React.FC = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [value, setValue] = useState<string>('');
   const dispatch = useAppDispatch();
@@ -47,7 +49,7 @@ const SearchPage: React.FC = () => {
       >
         <Form.Item name='search' style={{ marginBottom: 0 }}>
           <FormInput
-            placeholder='Search'
+            placeholder={t('search.name')}
             allowClear={true}
             value={value}
             onChange={handleChange}

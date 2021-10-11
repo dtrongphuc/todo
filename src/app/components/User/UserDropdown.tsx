@@ -1,9 +1,11 @@
 import { Dropdown, Menu } from 'antd';
 import { AuthContext } from 'contexts/AuthProvider';
 import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
 const UserDropdown: React.FC = ({ children }) => {
+  const { t } = useTranslation();
   const { authHandler } = useContext(AuthContext);
 
   let history = useHistory();
@@ -15,10 +17,10 @@ const UserDropdown: React.FC = ({ children }) => {
 
   const menu = (
     <Menu style={{ left: 16 }}>
-      <Menu.Item key='manage-account'>Mange account</Menu.Item>
+      <Menu.Item key='manage-account'>{t('account.manage')}</Menu.Item>
       <Menu.Divider />
       <Menu.Item key='logout' onClick={handleLogout}>
-        Logout
+        {t('account.logout')}
       </Menu.Item>
     </Menu>
   );

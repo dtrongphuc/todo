@@ -1,0 +1,45 @@
+{
+  "login": {
+    "title": "Login",
+    "input_1": {
+      "label": "Email",
+      "placeholder": "Email, phone number or Skype"
+    },
+    "input_2": {
+      "label": "Password",
+      "placeholder": "Password"
+    },
+    "submit": "Login"
+  },
+  "tasks": {
+    "name": "Tasks",
+    "input": "Add a task",
+    "empty": {
+      "title": "Focus on your day",
+      "text": "Get things done with My Day, a list that refreshes every day."
+    }
+  },
+  "completed": {
+    "name": "Completed",
+    "empty": {
+      "title": "Focus on your day",
+      "text": "No task completed yet."
+    }
+  },
+  "important": {
+    "name": "Important",
+    "empty": {
+      "text": "Try starring some tasks to see them here."
+    }
+  },
+  "search": {
+    "name": "Search",
+    "input": "Search",
+    "hint": "What would you like to find? You can search within tasks, steps, and notes",
+    "notFound": "We searched high and low but couldn't find what you're looking for."
+  },
+  "account": {
+    "manage": "Manage account",
+    "logout": "Logout"
+  }
+}

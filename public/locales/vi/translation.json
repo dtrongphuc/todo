@@ -1,0 +1,45 @@
+{
+  "login": {
+    "title": "Đăng nhập",
+    "input_1": {
+      "label": "Email",
+      "placeholder": "Email, số điện thoại hoặc Skype"
+    },
+    "input_2": {
+      "label": "Mật khẩu",
+      "placeholder": "Mật khẩu"
+    },
+    "submit": "Đăng nhập"
+  },
+  "tasks": {
+    "name": "Công việc",
+    "input": "Thêm công việc",
+    "empty": {
+      "title": "Tập trung vào ngày của bạn",
+      "text": "Hoàn thành công việc với My Day, một danh sách làm mới mỗi ngày."
+    }
+  },
+  "completed": {
+    "name": "Đã hoàn thành",
+    "empty": {
+      "title": "Tập trung vào ngày của bạn",
+      "text": "Chưa có công việc nào được hoàn thành."
+    }
+  },
+  "important": {
+    "name": "Quan trọng",
+    "empty": {
+      "text": "Hãy thử gắn dấu sao một số nhiệm vụ để xem chúng ở đây."
+    }
+  },
+  "search": {
+    "name": "Tìm kiếm",
+    "input": "Tìm kiếm",
+    "hint": "Bạn muốn tìm gì? Bạn có thể tìm kiếm trong các nhiệm vụ, các bước và ghi chú",
+    "notFound": "Chúng tôi đã tìm kiếm cao và thấp nhưng không thể tìm thấy những gì bạn đang tìm kiếm."
+  },
+  "account": {
+    "manage": "Quản lý tài khoản",
+    "logout": "Đăng xuất"
+  }
+}

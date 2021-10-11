@@ -8,6 +8,7 @@ import {
 } from 'react-icons/io5';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 export const CustomNavLink = styled(NavLink)`
   &.menu-active {
@@ -16,15 +17,21 @@ export const CustomNavLink = styled(NavLink)`
 `;
 
 const Menu: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Space direction='vertical' size={4} style={{ width: '100%' }}>
-      <MenuItem to='/' icon={<IoHomeOutline />} content='Tasks' />
+      <MenuItem to='/' icon={<IoHomeOutline />} content={t('tasks.name')} />
       <MenuItem
         to='/completed'
         icon={<IoCheckmarkSharp />}
-        content='Completed'
+        content={t('completed.name')}
       />
-      <MenuItem to='/important' icon={<IoStarOutline />} content='Important' />
+      <MenuItem
+        to='/important'
+        icon={<IoStarOutline />}
+        content={t('important.name')}
+      />
     </Space>
   );
 };

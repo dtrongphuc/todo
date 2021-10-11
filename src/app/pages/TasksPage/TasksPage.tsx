@@ -16,6 +16,7 @@ import { defaultParams, FetchParams } from 'api/task';
 import Heading from 'app/components/Heading/Heading';
 import { withPagination } from 'app/components/HOCs/withPagination';
 import { message } from 'antd';
+import { TFunction, useTranslation } from 'react-i18next';
 
 interface Props {
   next: {
@@ -30,15 +31,16 @@ interface Props {
   setPage: (p: number) => void;
 }
 
-const Empty = (
+const Empty = (t: TFunction) => (
   <EmptyTask
     image={Image}
-    text='Get things done with My Day, a list that refreshes every day.'
-    title='Focus on your day'
+    text={t('tasks.empty.text')}
+    title={t('tasks.empty.title')}
   />
 );
 
 const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const taskList = useAppSelector(selectTaskList);
   const loading = useAppSelector(selectLoading);
@@ -55,11 +57,11 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
         };
         dispatch(actions.fetch(params));
       } catch (error) {
-        message.error('Something went wrong.');
+        message.error(t('common:errorMessage'));
       }
     };
     fetch();
-  }, [dispatch, page]);
+  }, [dispatch, page, t]);
 
   useEffect(() => {
     if (shouldUpdate) {
@@ -72,12 +74,12 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
           };
           dispatch(actions.fetch(params));
         } catch (error) {
-          message.error('Something went wrong.');
+          message.error(t('common:errorMessage'));
         }
       };
       fetch();
     }
-  }, [dispatch, page, shouldUpdate]);
+  }, [dispatch, page, shouldUpdate, t]);
 
   const handleAddNewTask = async (value: string) => {
     try {
@@ -90,17 +92,22 @@ const TasksPage: React.FC<Props> = ({ next, prev, page, setPage }) => {
       dispatch(actions.addTask(data));
       setPage(1);
     } catch (error) {
-      message.error('Something went wrong.');
+      message.error(t('common:errorMessage'));
     }
   };
 
   const top = (
-    <Heading icon={<IoHomeOutline />} text='Tasks' prev={prev} next={next} />
+    <Heading
+      icon={<IoHomeOutline />}
+      text={t('tasks.name')}
+      prev={prev}
+      next={next}
+    />
   );
 
   return (
     <RightPanel
-      empty={Empty}
+      empty={Empty(t)}
       top={top}
       addNewTask={handleAddNewTask}
       isEmpty={!loading && (!taskList || taskList.length === 0)}

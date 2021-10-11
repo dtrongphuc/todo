@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NotFound from 'assets/images/not-found.png';
+import { useTranslation } from 'react-i18next';
 
 const Relative = styled.div`
   position: relative;
@@ -30,13 +31,13 @@ const Text = styled.p`
 `;
 
 const NotFoundBackground: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Relative>
       <Wrapper>
         <Img src={NotFound} alt='Search' />
-        <Text>
-          We searched high and low but couldn't find what you're looking for.
-        </Text>
+        <Text>{t('search.notFound')}</Text>
       </Wrapper>
     </Relative>
   );

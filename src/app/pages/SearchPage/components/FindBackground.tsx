@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Loupe from 'assets/images/loupe.png';
+import { useTranslation } from 'react-i18next';
 
 const Relative = styled.div`
   position: relative;
@@ -30,14 +31,13 @@ const Text = styled.p`
 `;
 
 const FindBackground: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Relative>
       <Wrapper>
         <Img src={Loupe} alt='Search' />
-        <Text>
-          What would you like to find? You can search within tasks, steps, and
-          notes
-        </Text>
+        <Text>{t('search.hint')}</Text>
       </Wrapper>
     </Relative>
   );

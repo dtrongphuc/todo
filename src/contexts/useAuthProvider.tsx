@@ -1,9 +1,11 @@
 import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AuthHandler } from './authHandler';
 import { ContextState, UserIdentity } from './types';
 
 export const useAuthProvider = (authHandler: AuthHandler): ContextState => {
+  const { t } = useTranslation('common');
   const [loading, setLoading] = useState<boolean>(true); // wait to get identity
   const [error, setError] = useState<string | null>(null);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
@@ -32,15 +34,15 @@ export const useAuthProvider = (authHandler: AuthHandler): ContextState => {
         setAuthenticated(response.data ? true : false);
       } catch (error: unknown) {
         if (axios.isAxiosError(error)) {
-          setError((error as AxiosError)?.message ?? 'Something went wrong.');
+          setError((error as AxiosError)?.message ?? t('errorMessage'));
         } else {
-          setError((error as Error)?.message ?? 'Something went wrong.');
+          setError((error as Error)?.message ?? t('errorMessage'));
         }
       } finally {
         setLoading(false);
       }
     })();
-  }, [authHandler]);
+  }, [authHandler, t]);
 
   return {
     loading,
