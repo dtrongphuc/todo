@@ -16,7 +16,7 @@ import { close, selectSidebarState } from 'features/setting/settingSlice';
 
 const LeftPanel: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { user } = useContext(AuthContext);
+  const { identity } = useContext(AuthContext);
   const sidebarState = useAppSelector(selectSidebarState);
 
   return (
@@ -25,7 +25,7 @@ const LeftPanel: React.FC = () => {
         <Brand>Microsoft To Do</Brand>
         <Space direction='vertical' style={{ width: '100%' }}>
           <FlexRow>
-            <User name={user?.name} email={user?.email} />
+            <User name={identity?.name ?? ''} email={identity?.email ?? ''} />
             <CustomNavLink to='/search' activeClassName='active'>
               <IoSearch size={18} color='#545454' />
             </CustomNavLink>

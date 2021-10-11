@@ -4,12 +4,12 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 
 const UserDropdown: React.FC = ({ children }) => {
-  const { logout } = useContext(AuthContext);
+  const { authHandler } = useContext(AuthContext);
 
   let history = useHistory();
 
   const handleLogout = (): void => {
-    logout();
+    authHandler.logout();
     history.push('/auth/login');
   };
 

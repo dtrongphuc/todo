@@ -20,10 +20,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { CurrentUser, UserInput } from 'models/User.interface';
 import { useMutation } from 'react-query';
-import { postLogin } from 'api/auth';
 import { AxiosError, AxiosResponse } from 'axios';
 import { AuthContext } from 'contexts/AuthProvider';
 import { useHistory } from 'react-router';
+import { localStorage } from 'utils/localStorage';
 
 // Schema validation
 const schema = yup
@@ -43,20 +43,22 @@ function Login() {
   } = useForm<UserInput>({
     resolver: yupResolver(schema),
   });
-  const { login } = useContext(AuthContext);
+  const { authHandler, setAuthState } = useContext(AuthContext);
 
   const { mutate, isLoading } = useMutation<
     AxiosResponse<CurrentUser>,
     AxiosError,
     UserInput
-  >(postLogin);
+  >(authHandler.login);
 
   let history = useHistory();
 
   const onSubmit: SubmitHandler<UserInput> = (data: UserInput) => {
     mutate(data, {
       onSuccess: (response) => {
-        login(response.data);
+        const { id, name, email } = response.data.user;
+        setAuthState(true, { id, name, email });
+        localStorage('token').save(response.data.accessToken);
         history.push('/');
       },
       onError: (err) => {

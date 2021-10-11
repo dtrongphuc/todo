@@ -118,7 +118,9 @@ const TaskItem: React.FC<Props> = ({ task }) => {
           <Tooltip
             placement='topRight'
             arrowPointAtCenter={true}
-            title='Mark as important'
+            title={
+              task?.isImportant ? 'Remove importance' : 'Mark as important'
+            }
           >
             <div>
               <Star

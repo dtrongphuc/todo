@@ -110,6 +110,7 @@ export const taskSlice = createSlice({
     // search
     searchTask: (state, action: PayloadAction<FindParams>) => {
       state.loading = true;
+      state.taskList = [];
     },
     searchTaskSucceeded: (state, action: PayloadAction<TaskState[]>) => {
       state.loading = false;

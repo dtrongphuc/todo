@@ -8,11 +8,12 @@ import SearchPage from './pages/SearchPage/SearchPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import CompletedPage from './pages/CompletedPage/CompletedPage';
 import ImportantPage from './pages/ImportantPage/ImportantPage';
+import { defaultAuthHandler } from 'contexts/authHandler';
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider provider={defaultAuthHandler}>
         <Switch>
           <Route exact path='/auth/login' component={LoginPage} />
           <PrivateRoute path='/'>
@@ -24,8 +25,8 @@ function App() {
             </MainLayout>
           </PrivateRoute>
         </Switch>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

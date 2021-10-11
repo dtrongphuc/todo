@@ -26,11 +26,13 @@ const SearchPage: React.FC = () => {
     if (!values?.search) {
       return;
     }
-    dispatch(actions.searchTask({ content: values.search }));
+    dispatch(actions.searchTask({ content_like: values.search }));
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(actions.searchTask({ content: e.currentTarget.value }));
+    if (e.currentTarget.value !== '') {
+      dispatch(actions.searchTask({ content_like: e.currentTarget.value }));
+    }
 
     setValue(e.currentTarget.value);
   };
@@ -55,7 +57,7 @@ const SearchPage: React.FC = () => {
       <Container>
         {!value && <FindBackground />}
         {value && taskList.length === 0 && !loading && <NotFoundBackground />}
-        {value && taskList.length > 0 && <List tasks={taskList} />}
+        {value && taskList.length > 0 && !loading && <List tasks={taskList} />}
       </Container>
     </SearchWrapper>
   );

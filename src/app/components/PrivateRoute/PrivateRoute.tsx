@@ -12,15 +12,15 @@ const PrivateRoute: React.FC<Props> = ({
   children,
   ...rest
 }) => {
-  const { isLoading, isLoggedIn } = useContext(AuthContext);
+  const { loading, authenticated } = useContext(AuthContext);
 
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isLoading) {
+        if (loading) {
           return <EmptyBackground />;
-        } else if (isLoggedIn) {
+        } else if (authenticated) {
           return Component ? <Component {...props} /> : children;
         }
 

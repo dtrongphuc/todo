@@ -12,7 +12,7 @@ export interface FetchParams {
 }
 
 export interface FindParams {
-  content: string;
+  content_like: string;
 }
 
 export const defaultParams: FetchParams = {

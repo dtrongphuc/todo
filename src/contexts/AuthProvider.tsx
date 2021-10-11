@@ -1,72 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { CurrentUser } from 'models/User.interface';
-import { localStorage } from 'utils/localStorage';
+import React, { ReactChild } from 'react';
+import { AuthHandler, defaultAuthHandler } from './authHandler';
+import { useAuthProvider } from './useAuthProvider';
+import { ContextState, UserIdentity } from './types';
 
-interface AuthState extends CurrentUser {
-  isLoggedIn: boolean;
-  isLoading: boolean;
-}
-
-interface ContextState extends AuthState {
-  isLoggedIn: boolean;
-  isLoading: boolean;
-  login: (d: CurrentUser) => void;
-  logout: () => void;
+interface AuthProviderProps {
+  provider: AuthHandler;
+  children: ReactChild;
 }
 
 const context: ContextState = {
-  accessToken: '',
-  user: {
-    id: '',
-    email: '',
-    name: '',
-  },
-  isLoggedIn: false,
-  isLoading: false,
-  login: (d: CurrentUser) => {},
-  logout: () => {},
-};
-
-const initialState: AuthState = {
-  accessToken: '',
-  user: {
-    id: '',
-    email: '',
-    name: '',
-  },
-  isLoggedIn: false,
-  isLoading: false,
+  loading: true,
+  error: null,
+  authenticated: false,
+  identity: null,
+  authHandler: defaultAuthHandler,
+  setAuthState: (authenticated: boolean, identity?: UserIdentity | null) => {},
 };
 
 export const AuthContext = React.createContext<ContextState>(context);
 
-const AuthProvider: React.FC = ({ children }) => {
-  const [auth, setAuth] = useState(initialState);
-
-  useEffect(() => {
-    const token: string = localStorage('token').get();
-    if (!token || token.length === 0) {
-      logout();
-    }
-  }, []);
-
-  const login = (data: CurrentUser): void => {
-    console.log('login');
-    setAuth({
-      ...data,
-      isLoading: false,
-      isLoggedIn: true,
-    });
-    localStorage('token').save(data.accessToken);
-  };
-
-  const logout = (): void => {
-    setAuth(initialState);
-    localStorage('token').remove();
-  };
-
+const AuthProvider: React.FC<AuthProviderProps> = ({ provider, children }) => {
+  const contextValues = useAuthProvider(provider);
   return (
-    <AuthContext.Provider value={{ ...auth, login, logout }}>
+    <AuthContext.Provider value={contextValues}>
       {children}
     </AuthContext.Provider>
   );
