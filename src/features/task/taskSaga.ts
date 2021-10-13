@@ -14,7 +14,7 @@ import { AxiosResponse } from 'axios';
 import { actions } from './taskSlice';
 
 // fetch
-function* handleFetchTaskList(action: PayloadAction<FetchParams>) {
+export function* handleFetchTaskList(action: PayloadAction<FetchParams>) {
   try {
     const response: AxiosResponse<TaskState[]> = yield call(
       getTaskList,
@@ -27,7 +27,7 @@ function* handleFetchTaskList(action: PayloadAction<FetchParams>) {
 }
 
 // add task
-function* handleAddTask(action: PayloadAction<TaskInput>) {
+export function* handleAddTask(action: PayloadAction<TaskInput>) {
   try {
     const response: AxiosResponse<TaskState> = yield call(
       postNewTask,
@@ -40,7 +40,7 @@ function* handleAddTask(action: PayloadAction<TaskInput>) {
 }
 
 // update complete, important, content,...
-function* handleUpdateTask(action: PayloadAction<TaskState>) {
+export function* handleUpdateTask(action: PayloadAction<TaskState>) {
   try {
     const response: AxiosResponse<TaskState> = yield call(
       updateTask,
@@ -53,7 +53,7 @@ function* handleUpdateTask(action: PayloadAction<TaskState>) {
 }
 
 // delete task
-function* handleDeleteTask(action: PayloadAction<number>) {
+export function* handleDeleteTask(action: PayloadAction<number>) {
   try {
     yield call(deleteTaskApi, action.payload);
     yield put(actions.deleteTaskSucceeded(action.payload));
@@ -62,7 +62,7 @@ function* handleDeleteTask(action: PayloadAction<number>) {
   }
 }
 
-function* handleSearch(action: PayloadAction<FindParams>) {
+export function* handleSearch(action: PayloadAction<FindParams>) {
   try {
     const response: AxiosResponse<TaskState[]> = yield call(
       findTask,

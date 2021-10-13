@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component matches the snapshot 1`] = `
+<BrowserRouter>
+  <AuthProvider
+    provider={
+      Object {
+        "getIdentity": [Function],
+        "login": [Function],
+        "logout": [Function],
+      }
+    }
+  >
+    <Switch>
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/auth/login"
+      />
+      <PrivateRoute
+        path="/"
+      >
+        <MainLayout>
+          <PrivateRoute
+            component={[Function]}
+            exact={true}
+            path="/"
+          />
+          <PrivateRoute
+            component={[Function]}
+            exact={true}
+            path="/completed"
+          />
+          <PrivateRoute
+            component={[Function]}
+            exact={true}
+            path="/important"
+          />
+          <PrivateRoute
+            component={[Function]}
+            exact={true}
+            path="/search"
+          />
+        </MainLayout>
+      </PrivateRoute>
+    </Switch>
+  </AuthProvider>
+</BrowserRouter>
+`;

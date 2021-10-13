@@ -15,4 +15,5 @@ export default i18n
     react: {
       useSuspense: false, //   <---- this will do the magic
     },
+    initImmediate: false,
   });

@@ -40,6 +40,7 @@ const NewTask: React.FC<Props> = ({ handleAdd }) => {
           onKeyDown={handleEnterKey}
           value={value}
           onChange={handleChange}
+          data-testid='input-add-task'
         />
         {!focused && <Hint>{t('tasks.input')}</Hint>}
       </Form>

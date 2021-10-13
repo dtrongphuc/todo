@@ -33,10 +33,9 @@ client.interceptors.response.use(
   function (error: AxiosError) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // If UNAUTHORIZED
-    // if (error.response?.status === 401) {
-    //   localStorage('token').remove();
-    //   // window.location.href = '/auth/login';
-    // }
+    if (error.response?.status === 401) {
+      localStorage('token').remove();
+    }
     return Promise.reject(error);
   }
 );

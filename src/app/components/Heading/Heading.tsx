@@ -62,12 +62,14 @@ const Heading: React.FC<Props> = ({ icon, text, next, prev }) => {
         <Button
           className={`${prev?.isDisabled ? 'disabled' : ''}`}
           onClick={prev?.handler}
+          data-testid='prev'
         >
           <IoChevronBackSharp size='1.1rem' />
         </Button>
         <Button
           className={`${next?.isDisabled ? 'disabled' : ''}`}
           onClick={next?.handler}
+          data-testid='next'
         >
           <IoChevronForwardSharp size='1.1rem' />
         </Button>
