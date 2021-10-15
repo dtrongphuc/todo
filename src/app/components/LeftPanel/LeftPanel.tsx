@@ -23,6 +23,7 @@ const LeftPanel: React.FC = () => {
   const sidebarState = useAppSelector(selectSidebarState);
 
   const handleChangeLng = (key: string) => () => {
+    console.log('test');
     if (i18n.language !== key) {
       i18n.changeLanguage(key);
     }
@@ -49,6 +50,7 @@ const LeftPanel: React.FC = () => {
               type='link'
               onClick={handleChangeLng('en')}
               disabled={i18n.language === 'en'}
+              className='btn-en'
             >
               EN
             </Button>
@@ -56,6 +58,7 @@ const LeftPanel: React.FC = () => {
               type='link'
               onClick={handleChangeLng('vi')}
               disabled={i18n.language === 'vi'}
+              className='btn-vn'
             >
               VN
             </Button>
